@@ -27,8 +27,30 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'shop',
-    'account',
+    'accounts',
+    # 소셜 로그인
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.apple', # Apple 로그인
+    'allauth.socialaccount.providers.kakao', # Kakao 로그인
 ]
+
+
+SITE_ID = 1
+
+
+# 로그인이 성공했을 때 어디로 연결할지 설정
+LOGIN_REDIRECT_URL = "/"
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

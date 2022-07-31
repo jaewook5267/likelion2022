@@ -4,6 +4,8 @@ from shop.models import Member
 # Member: user / name / addreses / pnumber / email
 from django.views.decorators.http import require_POST
 
+from django.contrib.auth.models import User #django에 내장된 유저 객체
+
 # 회원가입
 def register(request):
     if request.method == "POST":
@@ -45,10 +47,25 @@ def modify(request):
 
 # 로그인
 def login(request):
-    pass
+    # POST 요청시 로그인 검사
+    if request.method == 'POST':
+        id_input = request.POST['username']
+        pw_input = request.POST['password']
+        user = auth.authenticate(request, username=id_input, password=pw_input)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'login.html')
+    # GET 요청시 로그인 페이지 실행
+    else:
+        return render(request, 'login.html')
 
 
 # 로그아웃
 def logout(request):
-    pass
+    auth.logout(request) #auth클래스의 내장메소드인 logout 이용
+    return redirect('home')
 
+def unregister(request):
+    pass
