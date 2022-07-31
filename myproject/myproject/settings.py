@@ -21,21 +21,25 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # custom apps
     'shop',
     'accounts',
 
-    # 소셜 로그인
-    'django.contrib.sites',
+    # allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.apple', # Apple 로그인
-    'allauth.socialaccount.providers.kakao', # Kakao 로그인
-    'allauth.socialaccount.providers.google', # google 로그인
+
+    # 소셜로그인 사이트
+    'allauth.socialaccount.providers.apple',
+    'allauth.socialaccount.providers.kakao',
+    'allauth.socialaccount.providers.google',
 ]
 
 LOGIN_REDIRECT_URL = 'home' # 로그인 후 리디렉션할 페이지
