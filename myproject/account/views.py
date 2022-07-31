@@ -1,0 +1,54 @@
+from django.shortcuts import render, redirect
+from django.contrib import auth
+from shop.models import Member
+# Member: user / name / addreses / pnumber / email
+from django.views.decorators.http import require_POST
+
+# 회원가입
+def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        address = request.POST['address'],
+        pnumber = request.POST['pnumber'],
+        email = request.POST['email']
+
+        if Member.objects.filter(username = username).exists():
+            return render(request, 'register.html', {'error': "이미 존재하는 사용자입니다."})
+
+        if password == request.POST['password_check']:
+            user = Member.objects.create_user(
+                username, password, address, pnumber, email
+            )
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            return render(request, 'register.html', {'error':"비밀번호가 일치하지 않습니다."})
+    else:
+        return render(request, 'register.html')
+
+
+# 회원 탈퇴
+@require_POST
+def delete(request):
+    if request.user.is_authenticated:
+        request.user.delete()
+    # 회원 탈퇴 이후 로그인 화면으로 이동하도록 했습니다.
+    return redirect('account:login')
+
+
+# 회원 정보 변경
+def modify(request):
+    if request.method == "POST":
+        pass
+
+
+# 로그인
+def login(request):
+    pass
+
+
+# 로그아웃
+def logout(request):
+    pass
+
