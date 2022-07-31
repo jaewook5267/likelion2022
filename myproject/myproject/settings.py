@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'shop',
     'accounts',
-    
+
     # 소셜 로그인
     'django.contrib.sites',
     'allauth',
@@ -35,20 +35,21 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.apple', # Apple 로그인
     'allauth.socialaccount.providers.kakao', # Kakao 로그인
+    'allauth.socialaccount.providers.google', # google 로그인
 ]
+
+LOGIN_REDIRECT_URL = 'home' # 로그인 후 리디렉션할 페이지
+ACCOUNT_LOGOUT_REDIRECT_URL = "home"  # 로그아웃 후 리디렉션 할 페이지
+ACCOUNT_LOGOUT_ON_GET = True # 로그아웃 버튼 클릭 시 자동 로그아웃
 
 
 SITE_ID = 1
 
 
-# 로그인이 성공했을 때 어디로 연결할지 설정
-LOGIN_REDIRECT_URL = "/"
-
-
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend', # django 내장 로그인
 
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'allauth.account.auth_backends.AuthenticationBackend', # django-allauth 소셜 로그인
 )
 
 

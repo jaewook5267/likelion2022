@@ -3,8 +3,8 @@ from django.contrib import auth
 from shop.models import Member
 # Member: user / name / addreses / pnumber / email
 from django.views.decorators.http import require_POST
-
 from django.contrib.auth.models import User #django에 내장된 유저 객체
+import os
 
 # 회원가입
 def register(request):
@@ -29,6 +29,9 @@ def register(request):
     else:
         return render(request, 'register.html')
 
+# 필요하다고 해서 임시로 넣어둠
+def unregister(request):
+    pass
 
 # 회원 탈퇴
 @require_POST
@@ -66,6 +69,3 @@ def login(request):
 def logout(request):
     auth.logout(request) #auth클래스의 내장메소드인 logout 이용
     return redirect('home')
-
-def unregister(request):
-    pass
