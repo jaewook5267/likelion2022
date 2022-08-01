@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'shop',
     'accounts',
 
-    # allauth
+    # allauth 라이브러리
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
