@@ -9,6 +9,24 @@
     <title>Document</title>
 </head>
 <body>
+
+    {% block content %}
+    <h1>로그인</h1>
+    <form method="post" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        <div>
+            <label>사용자 ID</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div>
+            <label>비밀번호</label>
+            <input type="text" name="password" id="password">
+        </div>
+        <button type="submit">로그인</button>
+    </form>
+    {% endblock %}
+
+
     <a role="button" href="{% provider_login_url 'kakao' %}">카카오 소셜로그인</a>
     <a role="button" href="{% provider_login_url 'google' %}">google 소셜로그인</a>
 </body>
