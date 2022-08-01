@@ -11,24 +11,27 @@ def register(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-        address = request.POST['address'],
-        pnumber = request.POST['pnumber'],
+        name = request.POST['name']
+        pnumber = request.POST['pnumber']
         email = request.POST['email']
 
-        if Member.objects.filter(username = username).exists():
+        if User.objects.filter(username = username).exists():
             return render(request, 'register.html', {'error': "이미 존재하는 사용자입니다."})
 
         if password == request.POST['password_check']:
-            user = Member.objects.create_user(
-                username, password, address, pnumber, email
+            user = User.objects.create_user(
+                username=username, password=password
             )
-            auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            Member(user=user, name=name, pnumber=pnumber, email=email).save()
+
             return redirect('/')
         else:
             return render(request, 'register.html', {'error':"비밀번호가 일치하지 않습니다."})
     else:
         return render(request, 'register.html')
 
+        
 # 필요하다고 해서 임시로 넣어둠
 def unregister(request):
     pass

@@ -9,8 +9,10 @@
 <body>
     {% if user.is_authenticated %}
     <a href="{% url 'accounts:logout' %}">{{ user.username }}님, 환영합니다!</a>
-    {% else %} 
+    {% else %}
     <a href="{% url 'accounts:login' %}">로그인</a>
+    <a href="{% url 'accounts:register' %}">회원가입</a>
+
     {% endif %}
 
     <h1>여기가 쇼핑몰홈</h1>
