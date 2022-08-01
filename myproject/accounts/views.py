@@ -51,9 +51,9 @@ def modify(request):
         pass
 
 
-# 로그인
+# 일반 로그인
 def login(request):
-    # POST 요청시 로그인 검사
+    # POST 요청시 로그인 유저 검사
     if request.method == 'POST':
         id_input = request.POST['username']
         pw_input = request.POST['password']
@@ -68,7 +68,9 @@ def login(request):
         return render(request, 'login.html')
 
 
-# 로그아웃
+# 일반 로그아웃
 def logout(request):
     auth.logout(request) #auth클래스의 내장메소드인 logout 이용
     return redirect('home')
+
+
