@@ -1,9 +1,11 @@
+from typing_extensions import Self
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from shop.models import Member
 # Member: user / name / addreses / pnumber / email
 from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User #django에 내장된 유저 객체
+from django.contrib.auth.decorators import login_required
 import os
 
 # 회원가입
@@ -12,6 +14,7 @@ def register(request):
         username = request.POST['username']
         password = request.POST['password']
         name = request.POST['name']
+        address = request.POST['address']
         pnumber = request.POST['pnumber']
         email = request.POST['email']
 
@@ -23,7 +26,7 @@ def register(request):
                 username=username, password=password
             )
             auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            Member(user=user, name=name, pnumber=pnumber, email=email).save()
+            Member(user=user, name=name, address=address, pnumber=pnumber, email=email).save()
 
             return redirect('/')
         else:
@@ -36,6 +39,7 @@ def register(request):
 def unregister(request):
     pass
 
+
 # 회원 탈퇴
 @require_POST
 def delete(request):
@@ -45,10 +49,32 @@ def delete(request):
     return redirect('account:login')
 
 
-# 회원 정보 변경
+# 회원정보 변경
+
+@login_required
 def modify(request):
-    if request.method == "POST":
-        pass
+    if request.method == 'GET':
+        return render(request, 'modify.html')
+
+    elif request.method == 'POST':
+        # Member: user / name / addreses / pnumber / email
+        Member = request.user
+        username = request.POST['username']
+        password = request.POST['password']
+        name = request.POST['name']
+        address = request.POST['address']
+        pnumber = request.POST['pnumber']
+        email = request.POST['email']
+
+        Member.username = username
+        Member.password = password
+        Member.name = name
+        Member.address = address
+        Member.pnumber = pnumber
+        Member.email = email
+        Member.save()
+
+        return render(request, 'home.html')
 
 
 # 일반 로그인
