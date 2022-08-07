@@ -12,10 +12,21 @@
     {% else %}
     <a href="{% url 'accounts:login' %}">로그인</a>
     <a href="{% url 'accounts:register' %}">회원가입</a>
-
     {% endif %}
 
-    <h1>여기가 쇼핑몰홈</h1>
-    
+
+    <div class="container">
+        <div>
+        {% for product in products %}
+        <a href="{% url 'detail' product.id %}"><img src="{{product.img}}" alt=""></a>
+        <h1>{{product.brand}}</h1>
+        <h1>{{product.price}}</h1>
+        {% endfor %}
+        </div>
+    </div>
+        
+
+
+
 </body>
 </html>
