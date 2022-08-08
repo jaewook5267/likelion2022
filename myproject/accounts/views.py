@@ -1,10 +1,9 @@
-from typing_extensions import Self
 from django.shortcuts import render, redirect
 from django.contrib import auth
+from django.contrib.auth.models import User #django에 내장된 유저 객체
 from shop.models import Member
 # Member: user / name / addreses / pnumber / email
 from django.views.decorators.http import require_POST
-from django.contrib.auth.models import User #django에 내장된 유저 객체
 from django.contrib.auth.decorators import login_required
 import os
 
@@ -51,14 +50,19 @@ def delete(request):
 
 # 회원정보 변경
 
-@login_required
+
 def modify(request):
     if request.method == 'GET':
         return render(request, 'modify.html')
 
     elif request.method == 'POST':
-        # Member: user / name / addreses / pnumber / email
-        Member = request.user
+        # 장고에 회원가입된 아이디, 비밀번호 변경
+        target = request.user
+
+        # Member 객체의 회원정보 변경
+        # Member(user=user, name=name, address=address, pnumber=pnumber, email=email) 에서 목표 user을 가지는 Member을 찾는다.
+        target_member = Member.objects.filter(user=target)
+
         username = request.POST['username']
         password = request.POST['password']
         name = request.POST['name']
@@ -66,13 +70,16 @@ def modify(request):
         pnumber = request.POST['pnumber']
         email = request.POST['email']
 
-        Member.username = username
-        Member.password = password
-        Member.name = name
-        Member.address = address
-        Member.pnumber = pnumber
-        Member.email = email
-        Member.save()
+        target.username = username
+        target.password = password
+        target.save()
+
+        for object in target_member:
+            object.name = name
+            object.address = address
+            object.pnumber = pnumber
+            object.email = email
+            object.save()
 
         return render(request, 'home.html')
 
