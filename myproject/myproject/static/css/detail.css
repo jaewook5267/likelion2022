@@ -1,19 +1,11 @@
-body{
-    background-color: rgb(240, 227, 215);
-
-
-}
-
 
 .box{
     width:80%;
     margin: auto;
 }
 
-
 .product_detail{
     display:flex;
-
 }
 
 .product_img{
@@ -31,14 +23,11 @@ body{
 .product_info .name{
     font-size:15px;
     margin-bottom: 50px;
-
 }
 
 .product_info li{
     margin-bottom: 10px;
     list-style: none;
-
-       
 }
 
 .product_info .price .price_text{

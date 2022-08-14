@@ -17,8 +17,7 @@ def detail(request,product_id):
     context = {
         'product':product
     }
-    return render(request, 'detail.html',context )   
-    
+    return render(request, 'detail.html',context )
 
-
-
+def cart(request):
+    return render(request, 'cart.html')

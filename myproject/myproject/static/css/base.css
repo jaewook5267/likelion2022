@@ -1,0 +1,133 @@
+body {
+    margin : 0;
+    background-color: #F6F5EF;
+  
+  }
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+.bar{
+  width: 100%;
+  height: 17px;
+  display: flex;
+  background-color: #2f5e2c;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar__logo {
+  font-size: 24px;
+  color: #000;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.navbar__right {
+  list-style: none;
+  display: flex;
+  padding-left: 0px;
+  margin-right: 20px;
+}
+
+/* .navbar__icons li {
+  padding: 8px 12px;
+} */
+
+.navbar__left {
+  display: flex;
+  list-style: none;
+  padding-left: 0px;
+  margin-left: 20px;
+}
+
+.navbar__left li {
+  padding: 5px 13px;
+}
+
+.navbar__right li {
+  padding: 5px 13px;
+}
+
+.navbar__left li:hover {
+  background-color : #87c982;
+  border-radius: 5px;
+}
+
+.navbar__right .account:hover {
+  background-color : #87c982;
+  border-radius: 5px;
+}
+
+.navbar__right li:hover .sub__account{
+  opacity: 1;
+  visibility: visible;
+}
+
+.sub__account{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* .navbar > li:hover .sub__account{
+  opacity: 1;
+  visibility: visible;
+} */
+
+
+/* .navbar__icons li {
+  padding : 10px;
+} */
+
+/* .navbar__toggleBtn {
+  display: none;
+} */
+
+/* @media screen and (max-width: 768px) {
+  .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      padding : 10px 24px;
+  }
+  
+  .navbar__menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+  }
+
+  .navbar__menu li {
+      width: 100%;
+      text-align: center;
+  }
+
+  .navbar__icons{
+      display: none;
+      width: 100%;
+      justify-content: center;
+  }
+
+  .navbar__toggleBtn {
+      display: block;
+      position: absolute;
+      right : 20px;
+      font-size: 24px;
+      color :rgb(87, 170, 166);
+  }
+
+  .navbar__menu.active,
+  .navbar__icons.active {
+      display: flex;
+      transition: 1s ease-out;
+  }
+} */

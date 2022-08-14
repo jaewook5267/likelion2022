@@ -1,35 +1,66 @@
+{% extends 'base.html' %}
 {% load socialaccount %}
-
-
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    <script src="https://kit.fontawesome.com/c1c46eaf3c.js" crossorigin="anonymous"></script>
+
 </head>
-<body>
-
-    {% block content %}
-    <h1>로그인</h1>
-    <form method="post" action="{% url 'accounts:login' %}">
-        {% csrf_token %}
-        <div>
-            <label>사용자 ID</label>
-            <input type="text" name="username" id="username">
-        </div>
-        <div>
-            <label>비밀번호</label>
-            <input type="text" name="password" id="password">
-        </div>
-        <button type="submit">로그인</button>
-    </form>
-    {% endblock %}
-
-
-    <a role="button" href="{% provider_login_url 'kakao' %}">카카오 소셜로그인</a>
-    <a role="button" href="{% provider_login_url 'google' %}">google 소셜로그인</a>
-</body>
+    <body>
+        <main class="main">
+            <div class="container">
+                <section class="wrapper">
+                    <div class="heading">
+                        <h1 class="text text-large">로그인</h1>
+                        <p class="text text-normal">신규회원 이신가요? <span><a href="#" class="text text-links">새 계정 만들기</a></span>
+                        </p>
+                    </div>
+                    <form name="login" class="form">
+                        <div class="input-control">
+                            <label for="email" class="input-label" hidden>아이디</label>
+                            <input type="email" name="email" class="input-field" placeholder="아이디">
+                        </div>
+                        <div class="input-control">
+                            <label for="password" class="input-label" hidden>비밀번호</label>
+                            <input type="password" name="password" class="input-field" placeholder="비밀번호">
+                        </div>
+                        <div class="input-control">
+                            <a href="#" class="text text-links">비밀번호 찾기</a>
+                            <input type="button" name="submit" class="input-submit" value="로그인" disabled>
+                        </div>
+                    </form>
+                    <div class="striped">
+                        <span class="striped-line"></span>
+                        <!-- <span class="striped-text">또는</span> -->
+                        <span class="striped-line"></span>
+                    </div>
+                    <div class="method">
+                        <div class="method-control">
+                            <a href="{% provider_login_url 'google' %}" class="method-action">
+                            <i class="ion ion-logo-google"></i>
+                            <span>구글 로그인</span>
+                            </a>
+                        </div>
+                        <div class="method-control">
+                            <a href="{% provider_login_url 'kakao' %}" class="method-action-kakao">
+                            <i class="ion ion-logo-kakao"></i>
+                            <span></i>카카오 로그인</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </body>
 </html>
-
+{% endblock %}
