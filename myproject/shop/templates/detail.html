@@ -5,6 +5,8 @@
 
 <div class="container">
     <div class="box">
+        <form action="{% url 'add_cart' product.id %}" method="POST">
+        {% csrf_token %}
         <div class="product_detail">
             <div class="product_img">
                 <div><img width=300px src="{{product.img}}"></div>
@@ -31,16 +33,21 @@
                 <li><div class="amount">
                     <span class="amount_text">수량</span> 
                     <span class="amount_content">
-                        <span class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              수량을 선택하세요.
-                            </button>
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">1</a></li>
-                              <li><a class="dropdown-item" href="#">2</a></li>
-                              <li><a class="dropdown-item" href="#">3</a></li>
-                            </ul>
-                        </span>
+
+
+                            <select name="amount" id="pet-select">
+                                <option value="0">수량을 선택하세요</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            {% for message in messages %}
+                            <script>
+                                alert("{{ message }}");
+                            </script>
+                            {% endfor %}
                     </span> 
                 </div></li>
 
@@ -49,7 +56,7 @@
     
         <div class="product_btn">
             <div class="cart">
-                <button class="cart_btn">장바구니</button>
+                <button type="submit" id="cart_btn" class="cart_btn">장바구니</button>
             </div>
             <div class="buy">
                 <button class="buy_btn">즉시 구매하기</button>
@@ -61,6 +68,7 @@
                 <i class="bi bi-share-fill"></i>
             </div>        
         </div>
+        </form>
     </div>
 </div>
 {% endblock %}

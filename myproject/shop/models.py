@@ -19,6 +19,13 @@ class Member(models.Model):
     def __str__(self):
         return str(self.user)
 
+    # 모든 장바구니 아이템 가격총합
+    def get_cart_total(self):
+        carts = self.cart_set.all()
+        total = sum([item.get_total for item in carts])
+        return total
+
+
 
 # 카테고리
 class Category(models.Model):
@@ -51,6 +58,15 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.member.id)
+
+
+    # 개별상품 가격합
+    @property
+    def get_total(self):
+        total = self.product.price * self.cart_count
+        return total
+
+
 
 
 #주문

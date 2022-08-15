@@ -3,53 +3,161 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/cart.css' %}">
 
-<body>
-    <header>
-        <h2>장바구니</h2>
-    </header>
-    <section class="cart">
-        <table class="cart__list">
-            <form>
-                <thead>
-                    <tr>
-                        <td>선택</td>
-                        <td>사진</td>
-                        <td>상품정보</td>
-                        <td>수량</td>
-                        <td>상품금액</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="cart__list__detail">
-                        <td><input type="checkbox"></td>
-                        <td>사진</td>
-                        <td>상품명</td>
-                        <td>N개</td>
-                        <td>
-                            <span class="price">0원</span>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2"><button class="cart__list__optionbtn">장바구니 비우기</button>
-                            <button class="cart__list__optionbtn">선택상품 삭제</button>
-                        </td>
-                        <td>
-                            <span class="price__total">총 금액</span>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </form>
-        </table>
-        <div class="cart__mainbtns">
-            <button class="cart__orderbtn left">쇼핑 계속하기</button>
-            <button class="cart__orderbtn right">주문하기</button>
-        </div>
-    </section>
-</body>
+<section class="cart">
+    <table class="cart__list">
+
+            <thead>
+                <tr>
+                    <td>선택</td>
+                    <td>사진</td>
+                    <td>상품정보</td>
+                    <td></td>
+                    <td>수량</td>
+                    <td></td>
+                    <td>상품금액</td>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for item in items %}
+                <tr class="cart__list__detail">
+                    <td><input type="checkbox"></td>
+                    <td><img style="width:50px;"class="img" src="{{item.product.img}}"></td>
+                    <td>{{item.product.name}}</td>
+                    <td><button id="down_{{forloop.counter}}">↓</button></td>
+                    <td id="count_{{forloop.counter}}">{{item.cart_count}}</td>
+                    <td><button id="up_{{forloop.counter}}">↑</button></td>
+                    <td>
+                        <span id='total_price_{{forloop.counter}}'class="price">{{item.get_total}}</span>
+                    </td>
+                </tr>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"s></script>
+                <script type="text/javascript">
+                
+                //__________________수량 감소_______________________________________
+
+                var down_id = document.getElementById("down_{{forloop.counter}}");
+
+                down_id.addEventListener("click", downFunction)
+                function downFunction(e){
+
+                    var cart_id = "{{item.id}}"
+                    var id = e.currentTarget.id;
+                    var count = $('#count_' + id.substr(5)).text();
+
+                    var data = {
+                        'cart_id': cart_id,
+                        'count': count,
+                    }
+
+                    $.ajax({
+                        type:'POST',
+                        headers:{
+                            'X-CSRFTOKEN' : '{{ csrf_token }}'
+                        },
+                        url:"{% url 'count_down' %}",
+                        data:JSON.stringify(data),
+                        success: function(data){
+                            console.log(data);
+                            var minus_one = parseInt($('#count_'+id.substr(5)).text())-1;
+
+                            if(minus_one < 1){
+                                alert('최소 갯수입니다.');
+                            }else{
+                                //수량 갱신
+                                $('#count_' + id.substr(5)).text(minus_one);
+
+                                //가격 갱신
+                                var new_price =  parseInt($('#total_price_{{forloop.counter}}').text()) - "{{item.product.price}}";
+                                $('#total_price_{{forloop.counter}}').text(new_price);
+
+                                //장바구니 총 가격 갱신
+                                var sum = 0;
+                                for(var cart_num=1; cart_num<="{{item.member.cart_set.all|length}}"; cart_num++){
+                                    sum += parseInt($('#total_price_'+cart_num).text());
+                                }
+                                console.log(sum)
+                                $('#summary').text(sum);
+                            }
+                    
+                        },
+                        error: function(error){
+                            console.log("실패"); 
+                        }
+                    });
+                }
+                //__________________수량 증가_________________________________________
+
+                var up_id = document.getElementById("up_{{forloop.counter}}");
+                up_id.addEventListener("click", upFunction)
+
+                function upFunction(e){
+                    var cart_id = "{{item.id}}"    
+                    var id = e.currentTarget.id;
+                    var count = $('#count_'+id.substr(3)).text();
+
+                    var data = {
+                        'cart_id': cart_id,
+                        'count': count,
+                    }
+
+                    $.ajax({
+                        type:'POST',
+                        headers:{
+                            'X-CSRFTOKEN' : '{{ csrf_token }}'
+                        },
+                        url:"{% url 'count_up' %}",
+                        data:JSON.stringify(data),
+                        success: function(data){
+                            console.log("성공",data);
+
+                            //수량 갱신
+                            var plus_one = parseInt($('#count_'+id.substr(3)).text())+1;
+                            $('#count_'+id.substr(3)).text(plus_one);
+
+                            //가격 갱신
+                            var new_price =  parseInt($('#total_price_{{forloop.counter}}').text()) + parseInt("{{item.product.price}}");
+                            $('#total_price_{{forloop.counter}}').text(new_price);
+
+                        
+                            //장바구니 총 가격 갱신
+                            var sum = 0;
+                            for(var cart_num=1; cart_num<="{{item.member.cart_set.all|length}}"; cart_num++){
+                                sum += parseInt($('#total_price_'+cart_num).text());
+                            }
+                            console.log(sum)
+                            $('#summary').text(sum);
+                        },
+                        error: function(error){
+                            console.log("실패");
+                        }
+                    });
+                }
+                </script>
+
+            {% endfor %}      
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td colspan="2"><button class="cart__list__optionbtn">장바구니 비우기</button>
+                        <button class="cart__list__optionbtn">선택상품 삭제</button>
+                    </td>
+                    <td>
+                        <span class="price__total">총 금액</span>
+
+                    </td>
+                    <td id='summary'>{{total_price}}</td>
+
+                </tr>
+            </tfoot>
+
+    </table>
+    <div class="cart__mainbtns">
+        <button class="cart__orderbtn left">쇼핑 계속하기</button>
+        <button class="cart__orderbtn right">주문하기</button>
+    </div>
+</section>
+
 
 {% endblock %}
