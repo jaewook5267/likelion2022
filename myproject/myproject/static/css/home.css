@@ -53,3 +53,14 @@ li {
 .swiper-button-prev::after {
     display: none; /* 버튼 없앰 */
 }
+
+.container {
+    display: flex;
+}
+.item-list {
+    display: grid;
+    position: relative;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    /* grid-template-rows: 1fr 1fr; */
+    gap: 20px;
+}
