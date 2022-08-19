@@ -2,23 +2,17 @@ body{
     margin: 0;
 }
 
-*{
-    box-sizing: border-box;
-}
 
 h2{
     text-align: center;
     margin-top: 20px;
 }
 
-p,
+
 span{
     margin: 0;
 }
 
-a{
-    color: black;
-}
 
 .cart{
     width: 80%;
@@ -81,3 +75,42 @@ td{
     color: white;
     border: none;
 }
+
+/* 밑쪽에 버튼 */
+.btns{
+    margin-top:50px;
+}  
+
+
+
+.select_all_btn{
+    border:none;
+    background-color: #2f5e2c;
+    color: white;
+    width: 150px;
+    height: 30px;
+    font-size: 16px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.select_delete_btn{
+    border:none;
+    background-color: #2f5e2c;
+    color: white;
+    width: 150px;
+    height: 30px;
+    font-size: 16px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+#price_total{
+    margin-left:900px;
+}
+
+#summary{
+    margin-left:80px;
+}
+
+

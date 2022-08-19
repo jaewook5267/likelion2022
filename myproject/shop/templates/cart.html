@@ -24,11 +24,13 @@
                     <td><input type="checkbox" name = "chk" checked="on"></td>
                     <td><img style="width:50px;"class="img" src="{{item.product.img}}"></td>
                     <td>{{item.product.name}}</td>
-                    <td><button id="down_{{forloop.counter}}">↓</button></td>
-                    <td id="count_{{forloop.counter}}">{{item.cart_count}}</td>
-                    <td><button id="up_{{forloop.counter}}">↑</button></td>
+                    
+                    <td><i style="font-size:20px; cursor:pointer; "class="bi bi-arrow-down-circle" id="down_{{forloop.counter}}"></i></td>
+                    <td id="count_{{forloop.counter}}">{{item.cart_count}}개</td>
+                    <td><i style="font-size:20px; cursor:pointer; "class="bi bi-arrow-up-circle" id="up_{{forloop.counter}}"></i></td>
+                    
                     <td>
-                        <span id='total_price_{{forloop.counter}}'class="price">{{item.get_total}}</span>
+                        <span id='total_price_{{forloop.counter}}'class="price">{{item.get_total}}원</span>
                     </td>
                 </tr>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"s></script>
@@ -44,7 +46,9 @@
                     var cart_id = "{{item.id}}"
                     var id = e.currentTarget.id;
                     var count = $('#count_' + id.substr(5)).text();
-
+                    var regex = /[^0-9]/g;
+                    var count = count.replace(regex,"");
+                    console.log(count);
                     var data = {
                         'cart_id': cart_id,
                         'count': count,
@@ -65,11 +69,11 @@
                                 alert('최소 갯수입니다.');
                             }else{
                                 //수량 갱신
-                                $('#count_' + id.substr(5)).text(minus_one);
+                                $('#count_' + id.substr(5)).text(minus_one+"개");
 
                                 //가격 갱신
                                 var new_price =  parseInt($('#total_price_{{forloop.counter}}').text()) - "{{item.product.price}}";
-                                $('#total_price_{{forloop.counter}}').text(new_price);
+                                $('#total_price_{{forloop.counter}}').text(new_price+"원");
 
                                 //장바구니 총 가격 갱신
                                 var sum = 0;
@@ -77,7 +81,7 @@
                                     sum += parseInt($('#total_price_'+cart_num).text());
                                 }
                                 console.log(sum)
-                                $('#summary').text(sum);
+                                $('#summary').text(sum+"원");
                             }
                     
                         },
@@ -95,7 +99,9 @@
                     var cart_id = "{{item.id}}"    
                     var id = e.currentTarget.id;
                     var count = $('#count_'+id.substr(3)).text();
-
+                    var regex = /[^0-9]/g;
+                    var count = count.replace(regex,"");
+                    console.log(count);
                     var data = {
                         'cart_id': cart_id,
                         'count': count,
@@ -113,11 +119,11 @@
 
                             //수량 갱신
                             var plus_one = parseInt($('#count_'+id.substr(3)).text())+1;
-                            $('#count_'+id.substr(3)).text(plus_one);
+                            $('#count_'+id.substr(3)).text(plus_one+"개");
 
                             //가격 갱신
                             var new_price =  parseInt($('#total_price_{{forloop.counter}}').text()) + parseInt("{{item.product.price}}");
-                            $('#total_price_{{forloop.counter}}').text(new_price);
+                            $('#total_price_{{forloop.counter}}').text(new_price+"원");
 
                         
                             //장바구니 총 가격 갱신
@@ -126,7 +132,7 @@
                                 sum += parseInt($('#total_price_'+cart_num).text());
                             }
                             console.log(sum)
-                            $('#summary').text(sum);
+                            $('#summary').text(sum+"원");
                         },
                         error: function(error){
                             console.log("실패");
@@ -137,37 +143,32 @@
 
             {% endfor %}      
             </tbody>
+        </table>
+        <div class="btns">
+            <button class="select_all_btn"  id="select_all" onclick="select_all(this.checked);" >전체 선택</button>
+            <button class="select_delete_btn">선택 삭제</button>
 
-            <tfoot>
-                <tr>
-                    <td colspan="2"><button class="cart__list__optionbtn" id="select_all" onclick="select_all(this.checked);">전체선택</button>
-                        <button class="cart__list__optionbtn">선택상품 삭제</button>
-                    </td>
-                    <td>
-                        <span class="price__total">총 금액</span>
+            <span id="price_total">총 금액</span>
+            <span id='summary'>{{total_price}}원</span>
+        </div>
 
-                    </td>
-                    <td id='summary'>{{total_price}}</td>
-                </tr>
-                <script type="text/javascript">
-                    var select_id = document.getElementById("select_all");
-                    select_id.addEventListener("click", select_all)
 
-                    function select_all(bool){
-                        var checkboxes = document.getElementsByName("chk");
-                        for(var i=0; i<checkboxes.length; i++){
-                            checkboxes[i].checked = bool;
-                        }
-                    }
-                </script>
-            </tfoot>
-
-    </table>
-    <div class="cart__mainbtns">
-        <button class="cart__orderbtn left">쇼핑 계속하기</button>
-        <button class="cart__orderbtn right">주문하기</button>
-    </div>
+        <div class="cart__mainbtns">
+            <button class="cart__orderbtn left"><a href="{% url 'home' %}">쇼핑 계속하기</a></button>
+            <button class="cart__orderbtn right">주문하기</button>
+        </div>
 </section>
 
+<script type="text/javascript">
+    var select_id = document.getElementById("select_all");
+    select_id.addEventListener("click", select_all)
+
+    function select_all(bool){
+        var checkboxes = document.getElementsByName("chk");
+        for(var i=0; i<checkboxes.length; i++){
+            checkboxes[i].checked = bool;
+        }
+    }
+</script>
 
 {% endblock %}
