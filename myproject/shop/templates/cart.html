@@ -21,7 +21,7 @@
             <tbody>
             {% for item in items %}
                 <tr class="cart__list__detail">
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" name = "chk" checked="on"></td>
                     <td><img style="width:50px;"class="img" src="{{item.product.img}}"></td>
                     <td>{{item.product.name}}</td>
                     <td><button id="down_{{forloop.counter}}">↓</button></td>
@@ -140,7 +140,9 @@
 
             <tfoot>
                 <tr>
-                    <td colspan="2"><button class="cart__list__optionbtn">장바구니 비우기</button>
+                    <td colspan="2">
+                        <input type="checkbox" class="checkAll" name="check_all" id="check_all" checked="on">
+                        <!--<td class="cart__list__optionbtn" id="select_all" onclick="select_all(this.checked);">전체선택</td> -->
                         <button class="cart__list__optionbtn">선택상품 삭제</button>
                     </td>
                     <td>
@@ -148,8 +150,18 @@
 
                     </td>
                     <td id='summary'>{{total_price}}</td>
-
                 </tr>
+                <script type="text/javascript">
+                    var select_id = document.getElementById("select_all");
+                    select_id.addEventListener("click", select_all)
+
+                    function select_all(bool){
+                        var checkboxes = document.getElementsByName("chk");
+                        for(var i=0; i<checkboxes.length; i++){
+                            checkboxes[i].checked = "on";
+                        }
+                    }
+                </script>
             </tfoot>
 
     </table>
