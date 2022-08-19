@@ -46,10 +46,38 @@ def delete(request):
 
 
 # 회원 정보 변경
-def modify(request):
-    if request.method == "POST":
-        pass
 
+def modify(request):
+    if request.method == 'GET':
+        return render(request, 'modify.html')
+
+    elif request.method == 'POST':
+        # 장고에 회원가입된 아이디, 비밀번호 변경
+        target = request.user
+
+        # Member 객체의 회원정보 변경
+        # Member(user=user, name=name, address=address, pnumber=pnumber, email=email) 에서 목표 user을 가지는 Member을 찾는다.
+        target_member = Member.objects.filter(user=target)
+
+        username = request.POST['username']
+        password = request.POST['password']
+        name = request.POST['name']
+        address = request.POST['address']
+        pnumber = request.POST['pnumber']
+        email = request.POST['email']
+
+        target.username = username
+        target.password = password
+        target.save()
+
+        for object in target_member:
+            object.name = name
+            object.address = address
+            object.pnumber = pnumber
+            object.email = email
+            object.save()
+
+        return render(request, 'home.html')
 
 # 로그인
 def login(request):
