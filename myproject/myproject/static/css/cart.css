@@ -43,9 +43,13 @@ tbody{
 }
 
 td{
-    padding: 15px 0px;
+    padding: 15px 10px;
     border-bottom: 1px solid lightgray;
 }
+
+/* #summary{
+    text-align: right;
+} */
 
 .price{
     /* font-weight: bold; s*/

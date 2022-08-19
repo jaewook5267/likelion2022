@@ -24,8 +24,12 @@
     <div class="bar"></div>
     <nav class="navbar">
         <ul class="navbar__left">
-            <li><a href="#" class="menu"><i class="fa-solid fa-bars"></i>Menu</a></li>
-            <li><a href="#" class="search"><i class="fa-solid fa-magnifying-glass"></i>Search</a></li>
+            <!-- <i class="fa-solid fa-bars"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-user"></i>
+            <i class="fa-solid fa-bag-shopping"></i> -->
+            <li><a href="#" class="menu">Menu</a></li>
+            <li><a href="#" class="search">Search</a></li>
         </ul>
 
         <div class="navbar__logo">
@@ -33,14 +37,20 @@
         </div>
 
         <ul class="navbar__right">
-            <li><a href="#" class="account"><i class="fa-solid fa-user"></i>Account</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'accounts:logout' %}" style="padding: 8px 13px;">{{ user.username }}님, 환영합니다!</a>
+            {% else %}
+            <!-- <a href="{% url 'accounts:login' %}">로그인</a>
+            <a href="{% url 'accounts:register' %}">회원가입</a> -->
+            {% endif %}
+            <li><a href="#" class="account">Account</a>
                 <ul class="sub__account">
                     <li><a href="{% url 'accounts:login' %}">로그인</a></li>
                     <li><a href="{% url 'accounts:register' %}">회원가입</a></li>
                 </ul>
             </li>
 
-            <li><a href="{% url 'cart' %}" class="cart"><i class="fa-solid fa-bag-shopping"></i>Cart</a></li>
+            <li><a href="{% url 'cart' %}" class="cart">Cart</a></li>
 
             
         </ul>
