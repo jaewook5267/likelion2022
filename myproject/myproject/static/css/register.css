@@ -105,7 +105,7 @@
  .signup-btn-wrap{
      height: 55px;
      /* line-height: 55px; */
-     margin: 10px 0px 50px 0px;
+     margin: 10 0px 50px 0px;
      border: solid 1px rgba(0,0,0,.1);
      background-color: #2F5E2C;
      color: #fff;
@@ -141,5 +141,6 @@
      font-size: 15px;
      outline:none;
      cursor: pointer;
+
     
  }

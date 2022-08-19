@@ -140,9 +140,7 @@
 
             <tfoot>
                 <tr>
-                    <td colspan="2">
-                        <input type="checkbox" class="checkAll" name="check_all" id="check_all" checked="on">
-                        <!--<td class="cart__list__optionbtn" id="select_all" onclick="select_all(this.checked);">전체선택</td> -->
+                    <td colspan="2"><button class="cart__list__optionbtn" id="select_all" onclick="select_all(this.checked);">전체선택</button>
                         <button class="cart__list__optionbtn">선택상품 삭제</button>
                     </td>
                     <td>
@@ -158,7 +156,7 @@
                     function select_all(bool){
                         var checkboxes = document.getElementsByName("chk");
                         for(var i=0; i<checkboxes.length; i++){
-                            checkboxes[i].checked = "on";
+                            checkboxes[i].checked = bool;
                         }
                     }
                 </script>
