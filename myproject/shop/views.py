@@ -31,9 +31,9 @@ def cart(request):
         member = request.user.member
 
         items = member.cart_set.all()
-
         total_price = member.get_cart_total()
     else:
+        messages.warning(request,"장바구니는 로그인 후 이용 가능합니다.")
         return redirect("accounts:login")
 
     context = {

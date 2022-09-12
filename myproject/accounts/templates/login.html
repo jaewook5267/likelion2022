@@ -14,53 +14,60 @@
     <script src="https://kit.fontawesome.com/c1c46eaf3c.js" crossorigin="anonymous"></script>
 
 </head>
-    <body>
-        <main class="main">
-            <div class="container">
-                <section class="wrapper">
-                    <div class="heading">
-                        <h1 class="text text-large">로그인</h1>
-                        <p class="text text-normal">신규회원 이신가요? <span><a href="#" class="text text-links">새 계정 만들기</a></span>
-                        </p>
-                    </div>
-                    <form name="login" class="form" action="{% url 'accounts:login' %}" method="POST">
-                        {% csrf_token %}
-                        <div class="input-control">
-                            <label for="text" class="input-label" hidden>아이디</label>
-                            <input type="text" name="username" class="input-field" placeholder="아이디">
-                        </div>
-                        <div class="input-control">
-                            <label for="password" class="input-label" hidden>비밀번호</label>
-                            <input type="password" name="password" class="input-field" placeholder="비밀번호">
-                        </div>
-                        <div class="input-control">
-                            <input type="submit" style="margin: auto;" name="submit" class="input-submit" value="로그인">
-                        </div>
-                    </form>
-                    <div class="striped">
-                        <span class="striped-line"></span>
-                        <!-- <span class="striped-text">또는</span> -->
-                        <span class="striped-line"></span>
-                    </div>
-                    <div class="method">
-                        <div class="method-control">
-                            <a href="{% provider_login_url 'google' %}" class="method-action">
-                            <i class="ion ion-logo-google"></i>
-                            <span>구글 로그인</span>
-                            </a>
-                        </div>
-                        <div class="method-control">
-                            <a href="{% provider_login_url 'kakao' %}" class="method-action-kakao">
-                            <i class="ion ion-logo-kakao"></i>
-                            <span></i>카카오 로그인</span>
-                            </a>
-                        </div>
-                    </div>
-                </section>
+<!-- 로그인 후 이용가능하다는 메시지 호출 -->
+{% for message in messages %}
+<script>
+    alert("{{ message }}");
+</script>
+{% endfor %}
+<!-- 메시지 호출 끝 -->
+
+<main class="main">
+    <div class="container">
+        <section class="wrapper">
+            <div class="heading">
+                <h1 class="text text-large">로그인</h1>
+                <p class="text text-normal">신규회원 이신가요? <span><a href="{% url 'accounts:register' %}" class="text text-links">새 계정 만들기</a></span>
+                </p>
             </div>
-        </main>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    </body>
+            <form name="login" class="form" action="{% url 'accounts:login' %}" method="POST">
+                {% csrf_token %}
+                <div class="input-control">
+                    <label for="text" class="input-label" hidden>아이디</label>
+                    <input type="text" name="username" class="input-field" placeholder="아이디">
+                </div>
+                <div class="input-control">
+                    <label for="password" class="input-label" hidden>비밀번호</label>
+                    <input type="password" name="password" class="input-field" placeholder="비밀번호">
+                </div>
+                <div class="input-control">
+                    <input type="submit" style="margin: auto;" name="submit" class="input-submit" value="로그인">
+                </div>
+            </form>
+            <div class="striped">
+                <span class="striped-line"></span>
+                <!-- <span class="striped-text">또는</span> -->
+                <span class="striped-line"></span>
+            </div>
+            <div class="method">
+                <div class="method-control">
+                    <a href="{% provider_login_url 'google' %}" class="method-action">
+                    <i class="ion ion-logo-google"></i>
+                    <span>구글 로그인</span>
+                    </a>
+                </div>
+                <div class="method-control">
+                    <a href="{% provider_login_url 'kakao' %}" class="method-action-kakao">
+                    <i class="ion ion-logo-kakao"></i>
+                    <span></i>카카오 로그인</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
 </html>
 {% endblock %}

@@ -10,7 +10,7 @@
                 <tr>
                     <td>선택</td>
                     <td>사진</td>
-                    <td>상품정보</td>
+                    <td>상품명</td>
                     <td></td>
                     <td>수량</td>
                     <td></td>
@@ -25,6 +25,8 @@
                     <td><img style="width:50px;"class="img" src="{{item.product.img}}"></td>
                     <td>{{item.product.name}}</td>
                     
+                    
+
                     <td><i style="font-size:20px; cursor:pointer; "class="bi bi-arrow-down-circle" id="down_{{forloop.counter}}"></i></td>
                     <td id="count_{{forloop.counter}}">{{item.cart_count}}개</td>
                     <td><i style="font-size:20px; cursor:pointer; "class="bi bi-arrow-up-circle" id="up_{{forloop.counter}}"></i></td>
